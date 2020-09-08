@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,16 +8,25 @@ import 'package:foodapp/screens/signup.dart';
 import 'package:foodapp/widgets/Constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'mainscreen.dart';
+
 class welcomescreen extends StatefulWidget {
   @override
   _welcomescreenState createState() => _welcomescreenState();
 }
 
 class _welcomescreenState extends State<welcomescreen> {
-  void checklogin() async {
-    if (await FirebaseAuth.instance.currentUser != null) {
+
+  void checklogin() {
+
+    if (FirebaseAuth.instance.currentUser != null) {
+
       print("****loggedin***");
-    } else {}
+
+    }
+    else {
+
+    }
   }
 
   @override
@@ -24,15 +34,32 @@ class _welcomescreenState extends State<welcomescreen> {
     // TODO: implement initState
     super.initState();
     Firebase.initializeApp().whenComplete(() {
-      print("****completed****");
+      print("******COMPLETED*******");
+
+      final _auth = FirebaseAuth.instance;
+      User loggedInuser;
+      final user = _auth.currentUser;
+      if (user != null) {
+        loggedInuser = user;
+          if(loggedInuser.email != null)
+            {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => MainScreen()),
+              );
+            }
+      }
       setState(() {});
     });
 
-    checklogin();
+
   }
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       appBar: null,
       body: Container(
