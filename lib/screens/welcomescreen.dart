@@ -17,42 +17,12 @@ class welcomescreen extends StatefulWidget {
 
 class _welcomescreenState extends State<welcomescreen> {
 
-  void checklogin() {
 
-    if (FirebaseAuth.instance.currentUser != null) {
-
-      print("****loggedin***");
-
-    }
-    else {
-
-    }
-  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    Firebase.initializeApp().whenComplete(() {
-      print("******COMPLETED*******");
-
-      final _auth = FirebaseAuth.instance;
-      User loggedInuser;
-      final user = _auth.currentUser;
-      if (user != null) {
-        loggedInuser = user;
-          if(loggedInuser.email != null)
-            {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => MainScreen()),
-              );
-            }
-      }
-      setState(() {});
-    });
-
 
   }
 
@@ -103,7 +73,7 @@ class _welcomescreenState extends State<welcomescreen> {
                             style: TextStyle(
                               fontSize: 45.0,
                               fontWeight: FontWeight.w400,
-                              color: mainaccent,
+                              color: Colors.black,
                             ),
                           ),
                         ],

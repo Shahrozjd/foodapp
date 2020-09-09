@@ -1,8 +1,12 @@
 import 'dart:async';
 import 'dart:ui';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:foodapp/screens/welcomescreen.dart';
+
+import 'mainscreen.dart';
 
 class splashscreen extends StatefulWidget {
   @override
@@ -10,17 +14,54 @@ class splashscreen extends StatefulWidget {
 }
 
 class _splashscreenState extends State<splashscreen> {
+
+  void checklogin() async {
+
+    final _auth = FirebaseAuth.instance;
+    User loggedInuser;
+    final user = await _auth.currentUser;
+    if (user != null) {
+      loggedInuser = user;
+      //IF TRUE REDIRECT TO MAIN PAGE
+      if(loggedInuser.email != null)
+      {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => MainScreen()),
+        );
+      }
+    }
+    //IF NOT TRUE REDIRECT TO WELCOME SCREEN
+    else
+    {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => welcomescreen()),
+      );
+    }
+
+  }
+
+  void initializefirebase()
+  {
+    Firebase.initializeApp().whenComplete(() {
+      checklogin();
+      setState(() {});
+    });
+
+
+  }
+
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     Timer(
-        Duration(seconds: 5),
-        () => Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => welcomescreen(),
-            )));
+        Duration(seconds: 3),
+        () => initializefirebase());
   }
 
   @override

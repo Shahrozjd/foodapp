@@ -141,7 +141,7 @@ class _signupscreenState extends State<signupscreen> {
                                     final newUser = await _auth.createUserWithEmailAndPassword(
                                             email: email, password: password);
                                     if (newUser != null) {
-                                      Navigator.push(
+                                      Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) => MainScreen()),

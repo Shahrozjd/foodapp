@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:foodapp/screens/welcomescreen.dart';
+import 'package:foodapp/widgets/Constants.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -23,7 +25,6 @@ class _MainScreenState extends State<MainScreen> {
       final user = await _auth.currentUser;
       if (user != null) {
         loggedInuser = user;
-        print("*******"+loggedInuser.email.toString());
       }
     } on Exception catch (e) {
       print(e);
@@ -33,6 +34,20 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: mainaccent,
+        title: Text("FoodApp"),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.close),
+            onPressed: (){
+              _auth.signOut();
+              Navigator.pop(context);
+              Navigator.push(context,MaterialPageRoute(builder: (context)=>welcomescreen()));
+            },
+          )
+        ],
+      ),
       body: Center(
         child: Text("Welcome to Main Screen"),
       ),

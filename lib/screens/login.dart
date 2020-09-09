@@ -135,7 +135,7 @@ class _loginscreenState extends State<loginscreen> {
                                     final user = await _auth.signInWithEmailAndPassword(email: email, password: password);
                                     if(user != null)
                                       {
-                                        Navigator.push(
+                                        Navigator.pushReplacement(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) => MainScreen()),
